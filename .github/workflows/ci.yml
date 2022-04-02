@@ -22,11 +22,10 @@ jobs:
       - uses: actions/checkout@v3
 
       - uses: mig4/setup-bats@v1
+        with:
+          bats-version: 1.6.0
 
       - name: Run bats
-        env:
-          # No a write permission of /tmp on GitHub Actions.
-          TMPDIR: tmp/test
         run: bats -r test
 
   shellcheck:
