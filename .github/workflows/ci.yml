@@ -24,7 +24,7 @@ jobs:
       - uses: mig4/setup-bats@v1
 
       - name: Run bats
-        run: bats -r test/test.bats
+        run: bats -r test
 
   shellcheck:
     runs-on: ubuntu-latest
