@@ -1,5 +1,7 @@
 # xunlink
 
+[![CI](https://github.com/a5ob7r/xunlink/actions/workflows/ci.yml/badge.svg)](https://github.com/a5ob7r/xunlink/actions/workflows/ci.yml)
+
 An `unlink(1)` wrapper with extras.
 
 ## Features
