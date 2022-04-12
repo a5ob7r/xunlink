@@ -5,18 +5,37 @@ set -Cueo pipefail
 wrap () {
   echo -n -e "$1"
 
+  local -i first=1
+
   while read -r; do
-    echo "$REPLY"
+    if (( first )); then
+      echo -n -e "$REPLY"
+      first=0
+    else
+      echo -n -e "\n$REPLY"
+    fi
   done
 
-  echo -n -e "$2"
+  echo -e "$2"
+}
+
+# Whether or not can decorate with SGR.
+#
+# $NO_COLOR:
+#   https://no-color.org/
+# $YES_COLOR:
+#   It is just my experimental and hobby environment, and is inverse to
+#   $NO_COLOR. It means that must do decoration even if output target can't
+#   interpret SGR or other ANSI Escape Sequences. This is actually for debug.
+decoratable () {
+  [[ -n ${YES_COLOR+1} || -z ${NO_COLOR+1} && -t 2 && $TERM != dumb ]]
 }
 
 error () {
   local left=''
   local right=''
 
-  if [[ -t 2 ]]; then
+  if decoratable; then
     left='\033[31m'
     right='\033[0m'
   fi
@@ -28,7 +47,7 @@ warning () {
   local left=''
   local right=''
 
-  if [[ -t 2 ]]; then
+  if decoratable; then
     left='\033[33m'
     right='\033[0m'
   fi
